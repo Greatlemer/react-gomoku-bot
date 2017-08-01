@@ -1,0 +1,11 @@
+# Vim files.
+.*.swp
+
+# Node modules
+node_modules/
+
+# Yarn lockfile
+yarn.lock
+
+# Random clutter
+.DS_Store
