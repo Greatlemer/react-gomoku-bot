@@ -7,7 +7,7 @@ import './Board.css';
 
 export function newBoard(rows = 15, columns = 15) {
   return {
-    cells: new Array(rows * columns).fill(null).map(_ => (
+    cells: new Array(rows * columns).fill(null).map(() => (
       {
         contents: EMPTY_CELL,
         moveId: 0,
