@@ -1,0 +1,20 @@
+ol.gomoku_board {
+  background-color: darkgoldenrod;
+  font-size: 39px;
+  line-height: 0px;
+  margin: 1em;
+  padding-left: 0;
+  position: relative;
+  width: 15em;
+}
+
+ol.gomoku_board:before {
+  background-color: antiquewhite;
+  border: 1px solid black;
+  content: "";
+  height: calc(14em - 2px);
+  left: 0.5em;
+  position: absolute;
+  top: 0.5em;
+  width: calc(14em - 2px);
+}

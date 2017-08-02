@@ -1,0 +1,78 @@
+.board_cell {
+  background-color: transparent;
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  width: 1em;
+}
+
+.board_cell:after {
+  border-right: 1px solid black;
+  content: "";
+  height: 1em;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: calc(0.5em - 1px);
+}
+
+.board_cell.bottom_row:after {
+  height: 0.5em;
+}
+
+.board_cell.left_column:after {
+  content: none;
+}
+
+.board_cell.right_column:after {
+  content: none;
+}
+
+.board_cell.top_row:after {
+  height: 0.5em;
+  top: 0.5em;
+}
+
+.board_cell:before {
+  border-bottom: 1px solid black;
+  content: "";
+  height: calc(0.5em - 1px);
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 1em;
+}
+
+.board_cell.bottom_row:before {
+  content: none;
+}
+
+.board_cell.left_column:before {
+  width: 0.5em;
+  left: 0.5em;
+}
+
+.board_cell.right_column:before {
+  width: 0.5em;
+}
+
+.board_cell.top_row:before {
+  content: none;
+}
+
+.board_cell.black_piece {
+  background: radial-gradient(closest-corner at 50% 50%, black 20%, white 130%);
+  border-radius: 1em;
+}
+
+.board_cell.white_piece {
+  background: radial-gradient(closest-corner at 50% 50%, white 20%, black 130%);
+  border-radius: 1em;
+}
+
+.board_cell.black_piece:after,
+.board_cell.white_piece:after,
+.board_cell.black_piece:before,
+.board_cell.white_piece:before {
+  content: none;
+}
