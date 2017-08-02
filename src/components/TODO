@@ -6,7 +6,7 @@ Remaining tasks:
   * Be able to receive moves
 
 * Bot Logic:
-  * Random empty cell selector
+  * -Random empty cell selector-
   * Threat detection:
     * One-turn threat (Winning move available next turn)
     * Two-turn threat (Winning move forced in two turns)
