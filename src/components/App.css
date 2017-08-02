@@ -5,11 +5,16 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+  vertical-align: middle;
+}
+
+.App-logo ~ .App-logo {
+  animation: App-logo-reverse-spin infinite 20s linear;
 }
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 120px;
   padding: 20px;
   color: white;
 }
@@ -19,6 +24,11 @@
 }
 
 @keyframes App-logo-spin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes App-logo-reverse-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }

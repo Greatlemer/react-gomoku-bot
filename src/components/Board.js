@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Cell, { BLACK_PIECE, EMPTY_CELL, WHITE_PIECE } from './Cell';
+import Cell, { EMPTY_CELL } from './Cell';
 
 import './Board.css';
 
 export function newBoard(rows = 15, columns = 15) {
   return {
-    cells: new Array(rows * columns).fill(null).map((_, index) => (
+    cells: new Array(rows * columns).fill(null).map(_ => (
       {
         contents: EMPTY_CELL,
-        moveId: index + 1,
+        moveId: 0,
       }
     )),
     columns,

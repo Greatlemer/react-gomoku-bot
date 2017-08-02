@@ -18,8 +18,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>
+            <img src={logo} className="App-logo" alt="logo" />
+            Gomoku BattleBot: (React Edition)
+            <img src={logo} className="App-logo" alt="logo" />
+          </h2>
         </div>
         <Board board={this.state.board} />
       </div>
