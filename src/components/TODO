@@ -1,0 +1,20 @@
+Remaining tasks:
+
+* Interface with the server:
+  * Be able to start new games
+  * Be able to send moves
+  * Be able to receive moves
+
+* Bot Logic:
+  * Random empty cell selector
+  * Threat detection:
+    * One-turn threat (Winning move available next turn)
+    * Two-turn threat (Winning move forced in two turns)
+    * Higher order X-turn threats.
+  * Move logic:
+    1. Identify One-turn threats by self and play if found;
+    2. Identify One-turn threats by oppo and block if found;
+    3. For X = Two to N (where N is the highest threat we can detect):
+      i. Identify X-turn threats by oppo and block if found;
+      ii. Identify X-turn threats by self and play if found;
+    4. Play random empty cell;
