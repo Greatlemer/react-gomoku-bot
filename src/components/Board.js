@@ -18,6 +18,17 @@ export function newBoard(rows = 15, columns = 15) {
   };
 }
 
+export function selectRandomEmptyCell(cells) {
+  const emptyCells = cells.map((cell, index) => {
+    if (cell.contents === EMPTY_CELL) {
+      return index;
+    }
+    return -1;
+  }).filter(index => index > -1);
+  const randomCell = Math.floor(Math.random() * emptyCells.length);
+  return emptyCells[randomCell];
+}
+
 export default class Board extends Component {
   renderCell(cell, index, board) {
     const sides = {

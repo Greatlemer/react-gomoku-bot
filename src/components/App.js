@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
-import Board, { newBoard } from './Board';
+import Board, { newBoard, selectRandomEmptyCell } from './Board';
 
 import logo from './logo.svg';
 import './App.css';
-
-import { EMPTY_CELL } from './Cell'
 
 class App extends Component {
   constructor() {
@@ -20,14 +18,11 @@ class App extends Component {
   }
 
   playRandom(moveId, piece) {
-    const emptyCells = this.state.board.cells.map((cell, index) => {
-      if (cell.contents === EMPTY_CELL) {
-        return index;
-      }
-      return -1;
-    }).filter(index => index > -1);
-    const randomCell = Math.floor(Math.random() * emptyCells.length);
-    this.playTurn(emptyCells[randomCell], moveId, piece);
+    this.playTurn(
+      selectRandomEmptyCell(this.state.board.cells),
+      moveId,
+      piece
+    );
   }
 
   playTurn(location, moveId, piece) {
