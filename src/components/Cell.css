@@ -69,7 +69,7 @@
 }
 
 .board_cell.white_piece {
-  background: radial-gradient(closest-corner at 50% 50%, white 20%, black 130%);
+  background: radial-gradient(closest-corner at 50% 50%, white 20%, #aaa 130%);
   border-radius: 1em;
 }
 
