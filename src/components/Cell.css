@@ -1,7 +1,9 @@
 .board_cell {
+  align-items: center;
   background-color: transparent;
-  display: inline-block;
+  display: inline-flex;
   height: 1em;
+  justify-content: center;
   position: relative;
   width: 1em;
 }
@@ -63,6 +65,7 @@
 .board_cell.black_piece {
   background: radial-gradient(closest-corner at 50% 50%, black 20%, white 130%);
   border-radius: 1em;
+  color: white;
 }
 
 .board_cell.white_piece {
@@ -75,4 +78,14 @@
 .board_cell.black_piece:before,
 .board_cell.white_piece:before {
   content: none;
+}
+
+.move_number {
+  visibility: hidden;
+  font-size: 0.45em;
+}
+
+.black_piece .move_number,
+.white_piece .move_number {
+  visibility: visible;
 }

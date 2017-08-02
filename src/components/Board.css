@@ -1,5 +1,6 @@
 ol.gomoku_board {
-  background-color: darkgoldenrod;
+  background-color: hsl(43, 89%, 38%);
+  border: 0.3em outset hsl(43, 89%, 32%);
   font-size: 39px;
   line-height: 0px;
   margin: 1em;
@@ -9,7 +10,7 @@ ol.gomoku_board {
 }
 
 ol.gomoku_board:before {
-  background-color: antiquewhite;
+  background-color: hsl(43, 89%, 85%);
   border: 1px solid black;
   content: "";
   height: calc(14em - 2px);

@@ -7,7 +7,12 @@ import './Board.css';
 
 export function newBoard(rows = 15, columns = 15) {
   return {
-    cells: new Array(rows * columns).fill(EMPTY_CELL),
+    cells: new Array(rows * columns).fill(null).map((_, index) => (
+      {
+        contents: EMPTY_CELL,
+        moveId: index + 1,
+      }
+    )),
     columns,
     rows,
   };
@@ -21,7 +26,9 @@ export default class Board extends Component {
       right: (index + 1) % board.rows === 0,
       top: index < board.columns,
     }
-    return <Cell cell={cell} {...sides} key={index} />;
+    return (
+      <Cell cell={cell} {...sides} key={index} />
+    );
   }
 
   render() {
@@ -37,11 +44,8 @@ export default class Board extends Component {
 Board.propTypes = {
   board: PropTypes.shape({
     cells: PropTypes.arrayOf(
-      PropTypes.oneOf([
-        BLACK_PIECE,
-        EMPTY_CELL,
-        WHITE_PIECE,
-      ])).isRequired,
+      Cell.propTypes.cell.isRequired,
+    ),
     columns: PropTypes.number.isRequired,
     rows: PropTypes.number.isRequired,
   }).isRequired,
