@@ -1,5 +1,7 @@
 Remaining tasks:
 
+* -Move store to Redux-
+
 * Interface with the server:
   * Be able to start new games
   * Be able to send moves
