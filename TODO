@@ -1,11 +1,18 @@
 Remaining tasks:
 
-* -Move store to Redux-
+* Miscellaneous
+  * -Move store to Redux-
 
 * Interface with the server:
   * Be able to start new games
   * Be able to send moves
   * Be able to receive moves
+
+* Offline Play:
+  * Human vs Bot
+  * Human vs Human
+  * Victory detection
+    * Highlight winning row
 
 * Bot Logic:
   * -Random empty cell selector-
@@ -20,3 +27,5 @@ Remaining tasks:
       i. Identify X-turn threats by oppo and block if found;
       ii. Identify X-turn threats by self and play if found;
     4. Play random empty cell;
+  * Victory detection
+    * Highlight winning row

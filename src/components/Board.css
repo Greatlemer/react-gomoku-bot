@@ -13,9 +13,9 @@ ol.gomoku_board:before {
   background-color: hsl(43, 89%, 85%);
   border: 1px solid black;
   content: "";
-  height: calc(14em - 2px);
+  height: calc(100% - 1em - 2px);
   left: 0.5em;
   position: absolute;
   top: 0.5em;
-  width: calc(14em - 2px);
+  width: calc(100% - 1em - 2px);
 }

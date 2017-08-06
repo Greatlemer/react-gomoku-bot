@@ -5,7 +5,7 @@ import rootReducer from './reducers/index';
 import { newBoard } from './components/Board';
 
 const initialState = {
-  board: newBoard(),
+  board: newBoard(15, 15),
 }
 
 const enhancers = compose(

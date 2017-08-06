@@ -9,7 +9,7 @@ export const BLACK_PIECE = 0,
 
 export default class Cell extends Component {
   render() {
-    const { bottom, cell, left, right, top } = this.props;
+    const { bottom, cell, isKeyCell, left, right, top } = this.props;
     const { contents, moveId } = cell;
     let classes = ['board_cell'];
     if (bottom) { classes.push('bottom_row') }
@@ -20,6 +20,8 @@ export default class Cell extends Component {
       classes.push('black_piece');
     } else if (contents === WHITE_PIECE) {
       classes.push('white_piece');
+    } else if (isKeyCell) {
+      classes.push('key_cell');
     }
     return (
       <li className={classes.join(' ')}>

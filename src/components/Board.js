@@ -29,6 +29,31 @@ export function selectRandomEmptyCell(cells) {
   return emptyCells[randomCell];
 }
 
+function isKeyCell(index, rows, columns) {
+  // Key cells are:
+  // * The center cell;
+  // * The ones four in (diagonally) from each corner;
+  // * The ones four in from the side and in the middle (when cols or rows > 18);
+  const cellColumn = index % rows;
+  const cellRow = Math.floor(index / columns);
+  const fourFromBottom = rows - 4;
+  const fourFromRight = columns - 4;
+  const middleColumn = Math.floor(columns / 2);
+  const middleRow = Math.floor(rows / 2);
+  if (cellColumn === 3 || cellColumn === fourFromRight) {
+    if (cellRow === 3 || cellRow === fourFromBottom) {
+      return true;
+    }
+    return rows > 18 && cellRow === middleRow;
+  } else if (cellColumn === middleColumn) {
+    if (cellRow === middleRow) {
+      return true;
+    }
+    return (columns > 18 && (cellRow === 3 || cellRow === fourFromBottom));
+  }
+  return false;
+}
+
 export default class Board extends Component {
   renderCell(cell, index, board) {
     const sides = {
@@ -37,15 +62,19 @@ export default class Board extends Component {
       right: (index + 1) % board.rows === 0,
       top: index < board.columns,
     }
+    const keyCell = isKeyCell(index, board.rows, board.columns);
     return (
-      <Cell cell={cell} {...sides} key={index} />
+      <Cell cell={cell} isKeyCell={keyCell} {...sides} key={index} />
     );
   }
 
   render() {
     const { board } = this.props;
+    const style = {
+      width: `${board.columns}em`,
+    }
     return (
-      <ol className="gomoku_board">
+      <ol className="gomoku_board" style={style}>
         {board.cells.map((cell, index) => this.renderCell(cell, index, board))}
       </ol>
     );
