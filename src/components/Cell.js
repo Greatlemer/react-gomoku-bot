@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 
 import './Cell.css';
 
-export const BLACK_PIECE = 0,
-  EMPTY_CELL = -1,
-  WHITE_PIECE = 1;
+export const BLACK_PIECE = 1,
+  EMPTY_CELL = 0,
+  WHITE_PIECE = 2;
 
 export default class Cell extends Component {
   render() {

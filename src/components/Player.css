@@ -1,0 +1,19 @@
+.player {
+  flex-grow: 1;
+  padding-bottom: 1em;
+}
+
+.player.plays_as_black {
+  background-color: black;
+  color: white;
+}
+
+.player h4 {
+  margin: 0.5em 2em;
+  text-align: left;
+}
+
+.player p {
+  margin: 0 3.5em;
+  text-align: left;
+}

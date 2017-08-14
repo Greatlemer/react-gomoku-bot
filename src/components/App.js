@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as actionCreators from '../actions/actionCreators';
 import Board, { selectRandomEmptyCell } from './Board';
+import Game from './Game';
 
 import logo from './logo.svg';
 import './App.css';
@@ -43,6 +44,7 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
           </h2>
         </div>
+        <Game resizeBoard={this.props.resizeBoard} />
         <Board board={this.props.board} />
       </div>
     );

@@ -1,0 +1,5 @@
+.player_info {
+  border: 1px solid #aaa;
+  display: flex;
+  justify-content: center;
+}

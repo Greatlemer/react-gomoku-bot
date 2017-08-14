@@ -3,7 +3,7 @@ ol.gomoku_board {
   border: 0.3em outset hsl(43, 89%, 32%);
   font-size: 39px;
   line-height: 0px;
-  margin: 1em;
+  margin: 1em auto;
   padding-left: 0;
   position: relative;
   width: 15em;

@@ -5,7 +5,10 @@ import Cell, { EMPTY_CELL } from './Cell';
 
 import './Board.css';
 
-export function newBoard(rows = 15, columns = 15) {
+export function newBoard(size = 15) {
+  let columns = size,
+    rows = size;
+
   return {
     cells: new Array(rows * columns).fill(null).map(() => (
       {

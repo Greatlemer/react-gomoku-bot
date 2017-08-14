@@ -1,3 +1,5 @@
+import { newBoard } from '../components/Board';
+
 export default function board(state = {}, action) {
   if (action.type === 'PLAY_TURN') {
     const { location, moveId, piece } = action;
@@ -5,6 +7,8 @@ export default function board(state = {}, action) {
       ...state,
       cells: updateCellsForTurn(state.cells, location, moveId, piece),
     };
+  } else if (action.type === 'RESIZE_BOARD') {
+    return newBoard(parseInt(action.size, 10));
   }
   return state;
 }
