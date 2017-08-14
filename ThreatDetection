@@ -1,0 +1,16 @@
+Deal with 5x5 segments of the board
+Use references to cells so memory usage doesn't go overboard and the cell that was played only needs to be updated once
+Keep references as to which segments include a cell so we can limit number of cells that need to be scanned after each turn to 25
+Track if a segment is at the top or the left so certain things like checking columns or rows can be shortcutted
+Have an `identifyThreatsAndOpportunities` function that returns an object mapping out different threat and opportunity levels based on the number of turns it would take to win from that position.
+Using the following weights calculate a score for each cell (each weight is 25 * the lower + 1):
+  1-turn-opportunity = 16406
+  1-turn-threat = 3281
+  2-turn-threat = 656
+  2-turn-opportunity = 131
+  3-turn-threat = 26
+  3-turn-opportunity = 1
+  empty = 0
+  non-empty = -1
+Play the cell with the highest score, if there are multiple cells with the same highest score tiebreak by playing one at random.
+
