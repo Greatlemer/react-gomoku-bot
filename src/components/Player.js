@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { selectRandomEmptyCell } from './Board';
 import { BLACK_PIECE, WHITE_PIECE } from './Cell';
 import HumanPlayer from './HumanPlayer';
 import LocalRobotPlayer from './LocalRobotPlayer';
@@ -21,6 +22,7 @@ export default class Player extends Component {
     }
 
     this.handlePlayerChooserChange = this.handlePlayerChooserChange.bind(this);
+    this.nextMove = this.nextMove.bind(this);
     this.renderPlayerChooser = this.renderPlayerChooser.bind(this);
 
     this.state = {
@@ -45,6 +47,10 @@ export default class Player extends Component {
       ...this.state,
       playerController: this.playerChoices[this.player_type.value].component,
     });
+  }
+
+  nextMove() {
+    return selectRandomEmptyCell(this.props.board.cells);
   }
 
   render() {

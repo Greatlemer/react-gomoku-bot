@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actionCreators from '../actions/actionCreators';
-import Board, { selectRandomEmptyCell } from './Board';
+import Board from './Board';
 import Game from './Game';
 
 import logo from './logo.svg';
@@ -20,20 +20,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.playRandom = this.playRandom.bind(this);
-  }
-
-  playRandom(moveId, piece) {
-    this.props.playTurn(
-      selectRandomEmptyCell(this.props.board.cells),
-      moveId,
-      piece
-    );
-  }
-
   render() {
     return (
       <div className="App">
@@ -44,7 +30,11 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
           </h2>
         </div>
-        <Game resizeBoard={this.props.resizeBoard} />
+        <Game
+          board={this.props.board}
+          playTurn={this.props.playTurn}
+          resizeBoard={this.props.resizeBoard}
+        />
         <Board board={this.props.board} />
       </div>
     );
