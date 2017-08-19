@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { BLACK_PIECE, WHITE_PIECE } from './Cell';
+import { cellGroups } from './Board';
+import { BLACK_PIECE, EMPTY_CELL, WHITE_PIECE } from './Cell';
 import Player from './Player';
 
 import './Game.css';
 
 const nextPlayer = current_piece => current_piece === BLACK_PIECE ? WHITE_PIECE : BLACK_PIECE;
 
-export default class Game extends Component {
+class Game extends Component {
   constructor() {
     super();
 
     this.endGame = this.endGame.bind(this);
+    this.findWinner = this.findWinner.bind(this);
+    this.handleGameTick = this.handleGameTick.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
+    this.isWaitingFor = this.isWaitingFor.bind(this);
+    this.playMove = this.playMove.bind(this);
     this.renderGameButton = this.renderGameButton.bind(this);
-    this.requestNextMove = this.requestNextMove.bind(this);
     this.resizeBoard = this.resizeBoard.bind(this);
 
     this.state = {
@@ -23,68 +28,114 @@ export default class Game extends Component {
     }
   }
 
+  componentDidMount() {
+    // this.context.loop.subscribe(this.handleGameTick);
+  }
+
+  componentWillUnmount() {
+    // this.context.loop.unsubscribe(this.handleGameTick);
+  }
+
   resizeBoard() {
     this.props.resizeBoard(this.boardSize.value);
   }
 
-  endGame() {
+  endGame(winMessage) {
     this.setState({
       ...this.state,
       gameStarted: false,
+      winMessage,
     });
   }
 
+  findWinner() {
+    for (let cellGroup of cellGroups(this.props.board)) {
+      const counts = {
+        [BLACK_PIECE]: 0,
+        [EMPTY_CELL]: 0,
+        [WHITE_PIECE]: 0,
+      };
+      for (let cell of Object.values(cellGroup)) {
+        counts[cell.contents] += 1;
+      }
+      if (counts[EMPTY_CELL] === 0) {
+        if (counts[BLACK_PIECE] === 0) {
+          return WHITE_PIECE;
+        } else if (counts[WHITE_PIECE] === 0) {
+          return BLACK_PIECE;
+        }
+      }
+    }
+    return null;
+  }
+
   handleStartGame() {
+    this.props.resetBoard();
     this.setState({
       ...this.state,
       firstToPlay: nextPlayer(this.state.firstToPlay),
       gameStarted: true,
       moveNumber: 1,
       nextToPlay: this.state.firstToPlay,
+      winMessage: null,
     });
-    this.forceUpdate();
-    this.playGame();
   }
 
-  playGame() {
-    let nextMove = this.requestNextMove();
-    while (nextMove) {
-      this.props.playTurn(
-        nextMove,
-        this.state.moveNumber,
-        this.state.nextToPlay
-      );
+  handleGameTick() {
+    if (this.state.gameStarted && !this.state.waitingForTurn) {
       this.setState({
-        ...this.state,
-        moveNumber: this.state.moveNumber + 1,
-        nextToPlay: nextPlayer(this.state.nextToPlay),
+        waitingForTurn: true,
       });
-      console.log(this.state.moveNumber);
-      if (this.state.moveNumber > 30) {
-        this.endGame('Short Game Timeout');
-        break;
-      }
-      nextMove = false; //this.requestNextMove();
-      this.forceUpdate();
+      // this.playNextMove();
     }
   }
 
-  requestNextMove() {
-    switch (this.state.nextToPlay) {
-      case BLACK_PIECE:
-        return this.blackController.nextMove();
-      case WHITE_PIECE:
-        return this.whiteController.nextMove();
-      default:
-        this.endGame('Unknown player');
-        return false;
+  isWaitingFor(piece) {
+    return this.state.gameStarted && this.state.nextToPlay === piece;
+  }
+
+  playMove(location) {
+    this.props.playTurn(
+      location,
+      this.state.moveNumber,
+      this.state.nextToPlay
+    );
+    this.setState({
+      moveNumber: this.state.moveNumber + 1,
+      nextToPlay: nextPlayer(this.state.nextToPlay),
+      waitingForTurn: false,
+    });
+    const winner = this.findWinner();
+    if (winner === BLACK_PIECE) {
+      this.endGame('Black Wins!');
+    } else if (winner === WHITE_PIECE) {
+      this.endGame('White Wins!');
+    } else if (this.state.moveNumber > (this.props.board.columns * this.props.board.rows)) {
+      this.endGame('The Game Was Tied!');
     }
+  }
+
+  async playNextMove() {
+    let controller;
+    if (this.state.nextToPlay === BLACK_PIECE) {
+      controller = this.blackController;
+    } else {
+      controller = this.whiteController;
+    }
+    controller.nextMove(this.playMove);
   }
 
   renderGameButton() {
+    let winMessage = '';
+    if (this.state.winMessage) {
+      winMessage = (
+        <p>{this.state.winMessage}</p>
+      )
+    }
     if (!this.state.gameStarted) {
       return (
         <div>
+          {winMessage}
           <button onClick={this.handleStartGame}>Start Game</button>
         </div>
       )
@@ -112,16 +163,28 @@ export default class Game extends Component {
             board={this.props.board}
             colour={BLACK_PIECE}
             index={1}
+            nextMoveNumber={this.state.moveNumber}
+            playMove={this.playMove}
             ref={input => this.blackController = input}
+            waitingForMove={this.isWaitingFor(BLACK_PIECE)}
           />
           <Player
             board={this.props.board}
             colour={WHITE_PIECE}
             index={2}
+            nextMoveNumber={this.state.moveNumber}
+            playMove={this.playMove}
             ref={input => this.whiteController = input}
+            waitingForMove={this.isWaitingFor(WHITE_PIECE)}
           />
         </div>
       </div>
     )
   }
 }
+
+Game.contextTypes = {
+  loop: PropTypes.object,
+};
+
+export default Game;

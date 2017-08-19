@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Loop } from 'react-game-kit';
 
 import * as actionCreators from '../actions/actionCreators';
 import Board from './Board';
@@ -30,11 +31,14 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
           </h2>
         </div>
-        <Game
-          board={this.props.board}
-          playTurn={this.props.playTurn}
-          resizeBoard={this.props.resizeBoard}
-        />
+        <Loop>
+          <Game
+            board={this.props.board}
+            playTurn={this.props.playTurn}
+            resetBoard={this.props.resetBoard}
+            resizeBoard={this.props.resizeBoard}
+          />
+        </Loop>
         <Board board={this.props.board} />
       </div>
     );

@@ -5,7 +5,8 @@ import Cell, { EMPTY_CELL } from './Cell';
 
 import './Board.css';
 
-export function newBoard(size = 15) {
+export function newBoard(size = 15, groupSize = 5) {
+  // groupSize is the number needed in a row to win.
   let columns = size,
     rows = size;
 
@@ -17,6 +18,7 @@ export function newBoard(size = 15) {
       }
     )),
     columns,
+    groupSize,
     rows,
   };
 }
@@ -30,6 +32,43 @@ export function selectRandomEmptyCell(cells) {
   }).filter(index => index > -1);
   const randomCell = Math.floor(Math.random() * emptyCells.length);
   return emptyCells[randomCell];
+}
+
+export function* cellGroups(board) {
+  let cell = 0,
+    row,
+    column;
+  while (cell < board.cells.length) {
+    column = cell % board.rows;
+    row = Math.floor(cell / board.columns);
+    if (column <= (board.columns - board.groupSize)) {
+      // Extract row and yield
+      yield extractCellGroup(board.cells, cell, 1, board.groupSize);
+    }
+    if (row <= (board.rows - board.groupSize)) {
+      // Extract column and yield
+      yield extractCellGroup(board.cells, cell, board.columns, board.groupSize);
+      if (column >= board.groupSize - 1) {
+        // Extract diagonal (TR -> BL) and yield
+        yield extractCellGroup(board.cells, cell, board.columns - 1, board.groupSize);
+      }
+      if (column <= (board.columns - board.groupSize)) {
+        // Extract diagonal (TL -> BR) and yield
+        yield extractCellGroup(board.cells, cell, board.columns + 1, board.groupSize);
+      }
+    }
+    cell++;
+  }
+}
+
+function extractCellGroup(cells, startIndex, offset, groupSize) {
+  const obj = {};
+  let cellIndex = startIndex;
+  for (let i = 0; i < groupSize; i++) {
+    obj[cellIndex] = cells[cellIndex];
+    cellIndex += offset;
+  }
+  return obj;
 }
 
 function isKeyCell(index, rows, columns) {

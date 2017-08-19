@@ -7,7 +7,10 @@ import LocalRobotPlayer from './LocalRobotPlayer';
 
 import './Player.css';
 
-const playerTypes = [HumanPlayer, LocalRobotPlayer];
+const playerTypes = [
+  LocalRobotPlayer,
+  HumanPlayer,
+];
 
 export default class Player extends Component {
   constructor() {
@@ -16,7 +19,7 @@ export default class Player extends Component {
     this.playerChoices = {};
     for (const playerType of playerTypes) {
       this.playerChoices[playerType.shortName] = {
-        component: React.createElement(playerType),
+        component: playerType,
         name: playerType.name,
       }
     }
@@ -49,11 +52,12 @@ export default class Player extends Component {
     });
   }
 
-  nextMove() {
-    return selectRandomEmptyCell(this.props.board.cells);
+  nextMove(callback) {
+    this.state.playerController.nextMove(this.props.board, callback);
   }
 
   render() {
+    const Controller = this.state.playerController;
     const classes = ['player'];
     let colour = 'Unknown';
     if (this.props.colour === BLACK_PIECE) {
@@ -71,7 +75,13 @@ export default class Player extends Component {
         <h4>Type</h4>
         <p>{this.renderPlayerChooser()}</p>
         <h4>Info</h4>
-        {this.state.playerController}
+        <Controller
+          board={this.props.board}
+          colour={this.props.colour}
+          isWaitingForMove={this.props.waitingForMove}
+          nextMoveNumber={this.props.nextMoveNumber}
+          playMove={this.props.playMove}
+        />
       </div>
     )
   }

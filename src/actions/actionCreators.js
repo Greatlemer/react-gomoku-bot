@@ -14,6 +14,12 @@ export function resizeBoard(size) {
   };
 }
 
+export function resetBoard(size) {
+  return {
+    type: 'RESET_BOARD',
+  };
+}
+
 export function selectSquare(location, moveId) {
   return {
     location,
