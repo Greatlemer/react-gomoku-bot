@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 
 import { selectRandomEmptyCell } from './Board';
@@ -11,6 +12,11 @@ const playerTypes = [
   LocalRobotPlayer,
   HumanPlayer,
 ];
+
+const colourMap = {
+  [BLACK_PIECE]: 'Black',
+  [WHITE_PIECE]: 'White',
+};
 
 export default class Player extends Component {
   constructor() {
@@ -58,20 +64,18 @@ export default class Player extends Component {
 
   render() {
     const Controller = this.state.playerController;
-    const classes = ['player'];
-    let colour = 'Unknown';
-    if (this.props.colour === BLACK_PIECE) {
-      colour = 'Black';
-      classes.push('plays_as_black');
-    } else if (this.props.colour === WHITE_PIECE) {
-      colour = 'White';
-      classes.push('plays_as_white');
-    }
+    const classes = classNames(
+      'player',
+      {
+        'plays_as_black': this.props.colour === BLACK_PIECE,
+        'plays_as_white': this.props.colour === WHITE_PIECE,
+      }
+    );
     return (
-      <div className={classes.join(' ')}>
+      <div className={classes}>
         <h3>Player {this.props.index}</h3>
         <h4>Colour</h4>
-        <p>{colour}</p>
+        <p>{colourMap[this.props.colour] || 'Unknown'}</p>
         <h4>Type</h4>
         <p>{this.renderPlayerChooser()}</p>
         <h4>Info</h4>
