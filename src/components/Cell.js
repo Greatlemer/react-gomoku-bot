@@ -26,7 +26,7 @@ export default class Cell extends Component {
       }
     )
     return (
-      <li className={cellClasses}>
+      <li className={cellClasses} onClick={this.props.handleCellClick}>
         <span className="move_number">{moveId}</span>
       </li>
     );

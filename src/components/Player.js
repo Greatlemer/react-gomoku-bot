@@ -81,9 +81,11 @@ export default class Player extends Component {
         <Controller
           board={this.props.board}
           colour={this.props.colour}
+          gameStarted={this.props.gameStarted}
           isWaitingForMove={this.props.waitingForMove}
           nextMoveNumber={this.props.nextMoveNumber}
           playMove={this.props.playMove}
+          requireHumanInput={this.props.requireHumanInput}
         />
       </div>
     )

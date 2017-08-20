@@ -1,5 +1,9 @@
 Remaining tasks:
 
+* Bugs
+  * Board went weird at the end of an 8x8 match 5 game
+  * When a human plays game end isn't detected properly if they win (human vs human or human vs bot)
+
 * Miscellaneous
   * -Move store to Redux-
 
@@ -10,8 +14,8 @@ Remaining tasks:
 
 * Offline Play:
   * -Bot vs Bot-
-  * Human vs Bot
-  * Human vs Human
+  * -Human vs Bot-
+  * -Human vs Human-
   * -Victory detection-
   * -Highlight winning row-
 

@@ -36,6 +36,7 @@ class App extends Component {
             board={this.props.board}
             highlightWin={this.props.highlightWin}
             playTurn={this.props.playTurn}
+            requireHumanInput={this.props.requireHumanInput}
             resetBoard={this.props.resetBoard}
             resizeBoard={this.props.resizeBoard}
           />

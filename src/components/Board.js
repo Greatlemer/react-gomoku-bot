@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -107,8 +108,21 @@ export default class Board extends Component {
     }
     const keyCell = isKeyCell(index, board.rows, board.columns);
     const isWinner = board.winningCells.findIndex(val => val === index) !== -1;
+    const handleCellClick = () => {
+      if (!this.props.board.handleCellClick || cell.contents !== EMPTY_CELL) {
+        return;
+      }
+      this.props.board.handleCellClick(index);
+    };
     return (
-      <Cell cell={cell} isKeyCell={keyCell} isWinner={isWinner} {...sides} key={index} />
+      <Cell
+        cell={cell}
+        handleCellClick={handleCellClick}
+        isKeyCell={keyCell}
+        isWinner={isWinner}
+        {...sides}
+        key={index}
+      />
     );
   }
 
@@ -116,9 +130,15 @@ export default class Board extends Component {
     const { board } = this.props;
     const style = {
       width: `${board.columns}em`,
-    }
+    };
+    const classes = classNames(
+      'gomoku_board',
+      {
+        'awaiting_turn': this.props.board.handleCellClick,
+      }
+    );
     return (
-      <ol className="gomoku_board" style={style}>
+      <ol className={classes} style={style}>
         {board.cells.map((cell, index) => this.renderCell(cell, index, board))}
       </ol>
     );

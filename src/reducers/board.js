@@ -7,6 +7,12 @@ export default function board(state = {}, action) {
       return {
         ...state,
         cells: updateCellsForTurn(state.cells, location, moveId, piece),
+        handleCellClick: null,
+      };
+    case 'REQUIRE_HUMAN_INPUT':
+      return {
+        ...state,
+        handleCellClick: action.callback,
       };
     case 'RESIZE_BOARD':
       return newBoard(parseInt(action.size, 10));

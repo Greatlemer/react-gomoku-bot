@@ -141,19 +141,23 @@ class Game extends Component {
           <Player
             board={this.props.board}
             colour={BLACK_PIECE}
+            gameStarted={this.state.gameStarted}
             index={1}
             nextMoveNumber={this.state.moveNumber}
             playMove={this.playMove}
             ref={input => this.blackController = input}
+            requireHumanInput={this.props.requireHumanInput}
             waitingForMove={this.isWaitingFor(BLACK_PIECE)}
           />
           <Player
             board={this.props.board}
             colour={WHITE_PIECE}
+            gameStarted={this.state.gameStarted}
             index={2}
             nextMoveNumber={this.state.moveNumber}
             playMove={this.playMove}
             ref={input => this.whiteController = input}
+            requireHumanInput={this.props.requireHumanInput}
             waitingForMove={this.isWaitingFor(WHITE_PIECE)}
           />
         </div>

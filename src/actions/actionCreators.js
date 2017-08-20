@@ -1,3 +1,10 @@
+export function highlightWin(winningCells) {
+  return {
+    type: 'HIGHLIGHT_WIN',
+    winningCells: winningCells.map(val => parseInt(val, 10)),
+  };
+}
+
 export function playTurn(location, moveId, piece) {
   return {
     location,
@@ -5,6 +12,13 @@ export function playTurn(location, moveId, piece) {
     piece,
     type: 'PLAY_TURN',
   };
+}
+
+export function requireHumanInput(callback) {
+  return {
+    callback,
+    type: 'REQUIRE_HUMAN_INPUT',
+  }
 }
 
 export function resizeBoard(size) {
@@ -25,12 +39,5 @@ export function selectSquare(location, moveId) {
     location,
     moveId,
     type: 'SELECT_SQUARE',
-  };
-}
-
-export function highlightWin(winningCells) {
-  return {
-    type: 'HIGHLIGHT_WIN',
-    winningCells: winningCells.map(val => parseInt(val, 10)),
   };
 }
