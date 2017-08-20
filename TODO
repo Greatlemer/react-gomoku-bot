@@ -13,7 +13,7 @@ Remaining tasks:
   * Human vs Bot
   * Human vs Human
   * -Victory detection-
-  * Highlight winning row
+  * -Highlight winning row-
 
 * Bot Logic:
   * -Random empty cell selector-
@@ -22,7 +22,7 @@ Remaining tasks:
     * -Two-turn threat (Winning move forced in two turns)-
     * -Higher order X-turn threats.-
     * Complex X-turn threats (where the threat is more non-linear).
-  * Move logic:
+  * -Move logic:-
     1. -Identify One-turn threats by self and play if found;-
     2. -Identify One-turn threats by oppo and block if found;-
     3. -For X = Two to N (where N is the highest threat we can detect):-

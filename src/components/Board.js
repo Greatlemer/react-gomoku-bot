@@ -20,6 +20,7 @@ export function newBoard(size = 15, groupSize = 5) {
     columns,
     groupSize,
     rows,
+    winningCells: [],
   };
 }
 
@@ -105,8 +106,9 @@ export default class Board extends Component {
       top: index < board.columns,
     }
     const keyCell = isKeyCell(index, board.rows, board.columns);
+    const isWinner = board.winningCells.findIndex(val => val === index) !== -1;
     return (
-      <Cell cell={cell} isKeyCell={keyCell} {...sides} key={index} />
+      <Cell cell={cell} isKeyCell={keyCell} isWinner={isWinner} {...sides} key={index} />
     );
   }
 

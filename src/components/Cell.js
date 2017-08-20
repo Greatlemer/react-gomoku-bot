@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -9,22 +10,23 @@ export const BLACK_PIECE = 1,
 
 export default class Cell extends Component {
   render() {
-    const { bottom, cell, isKeyCell, left, right, top } = this.props;
+    const { bottom, cell, isKeyCell, isWinner, left, right, top } = this.props;
     const { contents, moveId } = cell;
-    let classes = ['board_cell'];
-    if (bottom) { classes.push('bottom_row') }
-    if (left) { classes.push('left_column') }
-    if (right) { classes.push('right_column') }
-    if (top) { classes.push('top_row') }
-    if (contents === BLACK_PIECE) {
-      classes.push('black_piece');
-    } else if (contents === WHITE_PIECE) {
-      classes.push('white_piece');
-    } else if (isKeyCell) {
-      classes.push('key_cell');
-    }
+    const cellClasses = classNames(
+      'board_cell',
+      {
+        'black_piece': contents === BLACK_PIECE,
+        'bottom_row': bottom,
+        'key_cell': isKeyCell && (contents === EMPTY_CELL),
+        'left_column': left,
+        'right_column': right,
+        'top_row': top,
+        'white_piece': contents === WHITE_PIECE,
+        'winning_piece': isWinner,
+      }
+    )
     return (
-      <li className={classes.join(' ')}>
+      <li className={cellClasses}>
         <span className="move_number">{moveId}</span>
       </li>
     );

@@ -47,9 +47,15 @@ class Game extends Component {
       }
       if (counts[EMPTY_CELL] === 0) {
         if (counts[BLACK_PIECE] === 0) {
-          return WHITE_PIECE;
+          return {
+            colour: WHITE_PIECE,
+            winningCells: Object.keys(cellGroup),
+          };
         } else if (counts[WHITE_PIECE] === 0) {
-          return BLACK_PIECE;
+          return {
+            colour: BLACK_PIECE,
+            winningCells: Object.keys(cellGroup),
+          };
         }
       }
     }
@@ -88,9 +94,11 @@ class Game extends Component {
       waitingForTurn: false,
     });
     const winner = this.findWinner();
-    if (winner === BLACK_PIECE) {
+    if (winner && winner.colour === BLACK_PIECE) {
+      this.props.highlightWin(winner.winningCells);
       this.endGame('Black Wins!');
-    } else if (winner === WHITE_PIECE) {
+    } else if (winner && winner.colour === WHITE_PIECE) {
+      this.props.highlightWin(winner.winningCells);
       this.endGame('White Wins!');
     } else if (this.state.moveNumber > (this.props.board.columns * this.props.board.rows)) {
       this.endGame('The Game Was Tied!');

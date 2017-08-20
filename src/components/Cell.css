@@ -136,3 +136,11 @@
 .board_cell.white_piece .move_number:before {
   display: none;
 }
+
+.board_cell.winning_piece.black_piece {
+  background: radial-gradient(closest-corner at 50% 50%, black 20%, red 70%);
+}
+
+.board_cell.winning_piece.white_piece {
+  background: radial-gradient(closest-corner at 50% 50%, white 20%, red 110%);
+}

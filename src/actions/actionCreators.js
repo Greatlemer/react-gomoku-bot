@@ -27,3 +27,10 @@ export function selectSquare(location, moveId) {
     type: 'SELECT_SQUARE',
   };
 }
+
+export function highlightWin(winningCells) {
+  return {
+    type: 'HIGHLIGHT_WIN',
+    winningCells: winningCells.map(val => parseInt(val, 10)),
+  };
+}
