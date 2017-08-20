@@ -12,7 +12,6 @@ class Game extends Component {
   constructor() {
     super();
 
-    this.endGame = this.endGame.bind(this);
     this.findWinner = this.findWinner.bind(this);
     this.handleBoardResize = this.handleBoardResize.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
@@ -27,16 +26,8 @@ class Game extends Component {
     }
   }
 
-  endGame(winMessage) {
-    this.setState({
-      ...this.state,
-      gameStarted: false,
-      winMessage,
-    });
-  }
-
-  findWinner() {
-    for (let cellGroup of cellGroups(this.props.board)) {
+  findWinner(board) {
+    for (let cellGroup of cellGroups(board)) {
       const counts = {
         [BLACK_PIECE]: 0,
         [EMPTY_CELL]: 0,
@@ -88,21 +79,26 @@ class Game extends Component {
       this.state.moveNumber,
       this.state.nextToPlay
     );
-    this.setState({
-      moveNumber: this.state.moveNumber + 1,
-      nextToPlay: nextPlayer(this.state.nextToPlay),
-      waitingForTurn: false,
+    this.setState((prevState, props) => {
+      const winner = this.findWinner(props.board);
+      let winMessage = null;
+      if (winner && winner.colour === BLACK_PIECE) {
+        this.props.highlightWin(winner.winningCells);
+        winMessage = 'Black Wins!';
+      } else if (winner && winner.colour === WHITE_PIECE) {
+        this.props.highlightWin(winner.winningCells);
+        winMessage = 'White Wins!';
+      } else if (this.state.moveNumber > (this.props.board.columns * this.props.board.rows)) {
+        winMessage = 'The Game Was Tied!';
+      }
+      return {
+        gameStarted: !winMessage,
+        moveNumber: this.state.moveNumber + 1,
+        nextToPlay: nextPlayer(this.state.nextToPlay),
+        waitingForTurn: false,
+        winMessage,
+      }
     });
-    const winner = this.findWinner();
-    if (winner && winner.colour === BLACK_PIECE) {
-      this.props.highlightWin(winner.winningCells);
-      this.endGame('Black Wins!');
-    } else if (winner && winner.colour === WHITE_PIECE) {
-      this.props.highlightWin(winner.winningCells);
-      this.endGame('White Wins!');
-    } else if (this.state.moveNumber > (this.props.board.columns * this.props.board.rows)) {
-      this.endGame('The Game Was Tied!');
-    }
   }
 
   renderGameButton() {
