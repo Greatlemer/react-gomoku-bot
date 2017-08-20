@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { cellGroups } from './Board';
 import { BLACK_PIECE, EMPTY_CELL, WHITE_PIECE } from './Cell';

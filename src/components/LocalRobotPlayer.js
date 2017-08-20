@@ -1,4 +1,4 @@
-import { cellGroups, selectRandomEmptyCell } from './Board';
+import { cellGroups } from './Board';
 import PlayerController from './PlayerController';
 
 import { BLACK_PIECE, EMPTY_CELL, WHITE_PIECE } from './Cell';
@@ -71,7 +71,7 @@ function determineNextMove(board, colour) {
   const topScore = Math.max(...weights);
   const topCells = weights.reduce((acc, score, index) => score === topScore ? [...acc, index] : acc);
   const randomCell = Math.floor(Math.random() * topCells.length);
-  return topCells[randomCell];;
+  return topCells[randomCell];
 }
 
 const className = 'local-robot-player',

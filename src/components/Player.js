@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import { selectRandomEmptyCell } from './Board';
 import { BLACK_PIECE, WHITE_PIECE } from './Cell';
 import HumanPlayer from './HumanPlayer';
 import LocalRobotPlayer from './LocalRobotPlayer';
