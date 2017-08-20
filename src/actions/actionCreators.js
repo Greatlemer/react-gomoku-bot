@@ -13,3 +13,17 @@ export function resizeBoard(size) {
     type: 'RESIZE_BOARD',
   };
 }
+
+export function resetBoard(size) {
+  return {
+    type: 'RESET_BOARD',
+  };
+}
+
+export function selectSquare(location, moveId) {
+  return {
+    location,
+    moveId,
+    type: 'SELECT_SQUARE',
+  };
+}

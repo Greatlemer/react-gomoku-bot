@@ -9,6 +9,8 @@ export default function board(state = {}, action) {
     };
   } else if (action.type === 'RESIZE_BOARD') {
     return newBoard(parseInt(action.size, 10));
+  } else if (action.type === 'RESET_BOARD') {
+    return newBoard(state.rows, state.groupSize);
   }
   return state;
 }

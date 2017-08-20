@@ -3,14 +3,30 @@ Use references to cells so memory usage doesn't go overboard and the cell that w
 Keep references as to which segments include a cell so we can limit number of cells that need to be scanned after each turn to 25
 Track if a segment is at the top or the left so certain things like checking columns or rows can be shortcutted
 Have an `identifyThreatsAndOpportunities` function that returns an object mapping out different threat and opportunity levels based on the number of turns it would take to win from that position.
-Using the following weights calculate a score for each cell (each weight is 25 * the lower + 1):
-  1-turn-opportunity = 16406
-  1-turn-threat = 3281
-  2-turn-threat = 656
-  2-turn-opportunity = 131
-  3-turn-threat = 26
-  3-turn-opportunity = 1
-  empty = 0
-  non-empty = -1
+Using the following weights calculate a score for each cell (each weight is 20 * the lower + 1 - see below for reason why):
+  1-turn-opportunity = 26,947,368,421
+  1-turn-threat      =  1,347,368,421
+  2-turn-opportunity =     67,368,421
+  2-turn-threat      =      3,368,421
+  3-turn-opportunity =        168,421
+  3-turn-threat      =          8,421
+  4-turn-opportunity =            421
+  4-turn-threat      =             21
+  5-turn-opportunity =              1 (Same as a 5-turn threat, i.e. the group of 5 cells are all empty)
+  no-threat-empty    =              0
+  non-empty          =             -1
 Play the cell with the highest score, if there are multiple cells with the same highest score tiebreak by playing one at random.
 
+These values are calculated for each group of 5 consecutive cells (in either row, column or diagonal) by looking to see what colour pieces are in the group. If the group is empty it's a 5-turn-opportunity, if the group only contains the player's colour then it's an X-turn-opportunity where X is the number of empty cells in the group. If the group only contains the opponent's colour then it's an X-turn threat where X is the number of empty cells in the group. If the group contains a mix of the player's and opponent's colours then it's classes as a no-threat group.
+
+Don't forget that some 2-turn threats need to look at a line of 6 cells so this may need to be grids of 6 by 6...
+Length 6 may not be necessary as it would count as a threat more than once and so would be weighted higher anyway - should try only looking at 5s to start with. Potentially if we go all the way down to 4-turn threats and opportunities it would be enough to handle all situations. (Need to check some of the more obscure ones though).
+When working out threat weight, each square can be on a maximum of 5 rows of 5, 5 cols of 5, 5 tl->br diags of 5 and 5 bl->tr diags of 5 meaning the weight scores only need to be ((20 * lower threat) + 1). This way anything with a higher ranking threat type will still appear above all the cells with only lower ranking threats/opportunities
+For each row, the 'x-turn threat/opportunity level' wil be determined by: if cell is empty and row/diag only contains pieces of the same type or empty cells then it's the count of empty cells. If the pieces are your own then it's an opportunity, if they are an opponents then it's a threat. 
+
+There are a (n - 4) rows of 5 in a full row of the board so there are n * (n - 4) rows of 5 in total
+Similarly there are n * (n - 4) columns of 5 in total
+Going across the board there are n - 4 diagonals, but these only go down n - 4 times so there are (n - 4) * (n - 4) diagonals of a given direction in total. This means there are:
+2 * ((n * (n - 4)) + ((n - 4) * (n - 4))) rows of 5 in total
+= 2 * ((2n - 4) * (n - 4))
+= 572 for n = 15 

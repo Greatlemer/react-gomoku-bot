@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 
+import { selectRandomEmptyCell } from './Board';
 import { BLACK_PIECE, WHITE_PIECE } from './Cell';
 import HumanPlayer from './HumanPlayer';
 import LocalRobotPlayer from './LocalRobotPlayer';
 
 import './Player.css';
 
-const playerTypes = [HumanPlayer, LocalRobotPlayer];
+const playerTypes = [
+  LocalRobotPlayer,
+  HumanPlayer,
+];
 
 export default class Player extends Component {
   constructor() {
@@ -15,12 +19,13 @@ export default class Player extends Component {
     this.playerChoices = {};
     for (const playerType of playerTypes) {
       this.playerChoices[playerType.shortName] = {
-        component: React.createElement(playerType),
+        component: playerType,
         name: playerType.name,
       }
     }
 
     this.handlePlayerChooserChange = this.handlePlayerChooserChange.bind(this);
+    this.nextMove = this.nextMove.bind(this);
     this.renderPlayerChooser = this.renderPlayerChooser.bind(this);
 
     this.state = {
@@ -47,7 +52,12 @@ export default class Player extends Component {
     });
   }
 
+  nextMove(callback) {
+    this.state.playerController.nextMove(this.props.board, callback);
+  }
+
   render() {
+    const Controller = this.state.playerController;
     const classes = ['player'];
     let colour = 'Unknown';
     if (this.props.colour === BLACK_PIECE) {
@@ -65,7 +75,13 @@ export default class Player extends Component {
         <h4>Type</h4>
         <p>{this.renderPlayerChooser()}</p>
         <h4>Info</h4>
-        {this.state.playerController}
+        <Controller
+          board={this.props.board}
+          colour={this.props.colour}
+          isWaitingForMove={this.props.waitingForMove}
+          nextMoveNumber={this.props.nextMoveNumber}
+          playMove={this.props.playMove}
+        />
       </div>
     )
   }
