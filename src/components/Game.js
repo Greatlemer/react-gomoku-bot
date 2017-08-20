@@ -19,6 +19,7 @@ class Game extends Component {
     this.isWaitingFor = this.isWaitingFor.bind(this);
     this.playMove = this.playMove.bind(this);
     this.renderGameButton = this.renderGameButton.bind(this);
+    this.renderPlayer = this.renderPlayer.bind(this);
 
     this.state = {
       firstToPlay: BLACK_PIECE,
@@ -117,9 +118,24 @@ class Game extends Component {
           {winMessage}
           <button onClick={this.handleStartGame}>Start Game</button>
         </div>
-      )
+      );
     }
     return <p>Game in progress...</p>;
+  }
+
+  renderPlayer(index, piece) {
+    return (
+      <Player
+        board={this.props.board}
+        colour={piece}
+        gameStarted={this.state.gameStarted}
+        index={index}
+        nextMoveNumber={this.state.moveNumber}
+        playMove={this.playMove}
+        requireHumanInput={this.props.requireHumanInput}
+        waitingForMove={this.isWaitingFor(piece)}
+      />
+    );
   }
 
   render() {
@@ -138,28 +154,8 @@ class Game extends Component {
           { this.renderGameButton() }
         </div>
         <div className='player_info'>
-          <Player
-            board={this.props.board}
-            colour={BLACK_PIECE}
-            gameStarted={this.state.gameStarted}
-            index={1}
-            nextMoveNumber={this.state.moveNumber}
-            playMove={this.playMove}
-            ref={input => this.blackController = input}
-            requireHumanInput={this.props.requireHumanInput}
-            waitingForMove={this.isWaitingFor(BLACK_PIECE)}
-          />
-          <Player
-            board={this.props.board}
-            colour={WHITE_PIECE}
-            gameStarted={this.state.gameStarted}
-            index={2}
-            nextMoveNumber={this.state.moveNumber}
-            playMove={this.playMove}
-            ref={input => this.whiteController = input}
-            requireHumanInput={this.props.requireHumanInput}
-            waitingForMove={this.isWaitingFor(WHITE_PIECE)}
-          />
+          { this.renderPlayer(1, BLACK_PIECE) }
+          { this.renderPlayer(2, WHITE_PIECE) }
         </div>
       </div>
     )
