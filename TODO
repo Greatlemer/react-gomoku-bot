@@ -1,7 +1,7 @@
 Remaining tasks:
 
 * Bugs
-  * Board went weird at the end of an 8x8 match 5 game
+  * -Board went weird at the end of an 8x8 match 5 game-
   * When a human plays game end isn't detected properly if they win (human vs human or human vs bot)
 
 * Miscellaneous

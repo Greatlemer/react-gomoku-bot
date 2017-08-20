@@ -69,7 +69,7 @@ function determineNextMove(board, colour) {
     }
   }
   const topScore = Math.max(...weights);
-  const topCells = weights.reduce((acc, score, index) => score === topScore ? [...acc, index] : acc);
+  const topCells = weights.reduce((acc, score, index) => score === topScore ? [...acc, index] : acc, []);
   const randomCell = Math.floor(Math.random() * topCells.length);
   return topCells[randomCell];
 }
