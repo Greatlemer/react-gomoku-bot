@@ -15,7 +15,6 @@ class Game extends Component {
 
     this.endGame = this.endGame.bind(this);
     this.findWinner = this.findWinner.bind(this);
-    this.handleGameTick = this.handleGameTick.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
     this.isWaitingFor = this.isWaitingFor.bind(this);
     this.playMove = this.playMove.bind(this);
@@ -26,14 +25,6 @@ class Game extends Component {
       firstToPlay: BLACK_PIECE,
       gameStarted: false,
     }
-  }
-
-  componentDidMount() {
-    // this.context.loop.subscribe(this.handleGameTick);
-  }
-
-  componentWillUnmount() {
-    // this.context.loop.unsubscribe(this.handleGameTick);
   }
 
   resizeBoard() {
@@ -79,15 +70,6 @@ class Game extends Component {
       nextToPlay: this.state.firstToPlay,
       winMessage: null,
     });
-  }
-
-  handleGameTick() {
-    if (this.state.gameStarted && !this.state.waitingForTurn) {
-      this.setState({
-        waitingForTurn: true,
-      });
-      // this.playNextMove();
-    }
   }
 
   isWaitingFor(piece) {
@@ -182,9 +164,5 @@ class Game extends Component {
     )
   }
 }
-
-Game.contextTypes = {
-  loop: PropTypes.object,
-};
 
 export default Game;
