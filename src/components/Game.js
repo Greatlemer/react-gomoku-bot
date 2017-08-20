@@ -15,20 +15,16 @@ class Game extends Component {
 
     this.endGame = this.endGame.bind(this);
     this.findWinner = this.findWinner.bind(this);
+    this.handleBoardResize = this.handleBoardResize.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
     this.isWaitingFor = this.isWaitingFor.bind(this);
     this.playMove = this.playMove.bind(this);
     this.renderGameButton = this.renderGameButton.bind(this);
-    this.resizeBoard = this.resizeBoard.bind(this);
 
     this.state = {
       firstToPlay: BLACK_PIECE,
       gameStarted: false,
     }
-  }
-
-  resizeBoard() {
-    this.props.resizeBoard(this.boardSize.value);
   }
 
   endGame(winMessage) {
@@ -58,6 +54,10 @@ class Game extends Component {
       }
     }
     return null;
+  }
+
+  handleBoardResize() {
+    this.props.resizeBoard(this.boardSize.value);
   }
 
   handleStartGame() {
@@ -97,16 +97,6 @@ class Game extends Component {
     }
   }
 
-  async playNextMove() {
-    let controller;
-    if (this.state.nextToPlay === BLACK_PIECE) {
-      controller = this.blackController;
-    } else {
-      controller = this.whiteController;
-    }
-    controller.nextMove(this.playMove);
-  }
-
   renderGameButton() {
     let winMessage = '';
     if (this.state.winMessage) {
@@ -133,7 +123,7 @@ class Game extends Component {
           <div>
             <label>Board Size: <input
                 defaultValue={15}
-                onChange={this.resizeBoard}
+                onChange={this.handleBoardResize}
                 ref={input => this.boardSize = input}
                 type='number'
             /></label>
