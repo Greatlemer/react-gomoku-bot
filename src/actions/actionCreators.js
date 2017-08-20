@@ -1,3 +1,10 @@
+export function changeWinCondition(groupSize) {
+  return {
+    groupSize: parseInt(groupSize, 10),
+    type: 'CHANGE_WIN_CONDITION',
+  }
+}
+
 export function highlightWin(winningCells) {
   return {
     type: 'HIGHLIGHT_WIN',
@@ -23,7 +30,7 @@ export function requireHumanInput(callback) {
 
 export function resizeBoard(size) {
   return {
-    size,
+    size: parseInt(size, 10),
     type: 'RESIZE_BOARD',
   };
 }

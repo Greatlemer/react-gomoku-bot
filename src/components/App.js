@@ -34,6 +34,7 @@ class App extends Component {
         <Loop>
           <Game
             board={this.props.board}
+            changeWinCondition={this.props.changeWinCondition}
             highlightWin={this.props.highlightWin}
             playTurn={this.props.playTurn}
             requireHumanInput={this.props.requireHumanInput}

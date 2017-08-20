@@ -14,6 +14,7 @@ class Game extends Component {
 
     this.findWinner = this.findWinner.bind(this);
     this.handleBoardResize = this.handleBoardResize.bind(this);
+    this.handleGroupSizeUpdate = this.handleGroupSizeUpdate.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
     this.isWaitingFor = this.isWaitingFor.bind(this);
     this.playMove = this.playMove.bind(this);
@@ -55,6 +56,10 @@ class Game extends Component {
 
   handleBoardResize() {
     this.props.resizeBoard(this.boardSize.value);
+  }
+
+  handleGroupSizeUpdate() {
+    this.props.changeWinCondition(this.groupSize.value);
   }
 
   handleStartGame() {
@@ -144,6 +149,14 @@ class Game extends Component {
                 defaultValue={15}
                 onChange={this.handleBoardResize}
                 ref={input => this.boardSize = input}
+                type='number'
+            /></label>
+          </div>
+          <div>
+            <label>X-in-a-row to win: <input
+                defaultValue={5}
+                onChange={this.handleGroupSizeUpdate}
+                ref={input => this.groupSize = input}
                 type='number'
             /></label>
           </div>

@@ -2,6 +2,11 @@ import { newBoard } from '../components/Board';
 
 export default function board(state = {}, action) {
   switch (action.type) {
+    case 'CHANGE_WIN_CONDITION':
+      return {
+        ...state,
+        groupSize: action.groupSize,
+      };
     case 'PLAY_TURN':
       const { location, moveId, piece } = action;
       return {
@@ -15,7 +20,7 @@ export default function board(state = {}, action) {
         handleCellClick: action.callback,
       };
     case 'RESIZE_BOARD':
-      return newBoard(parseInt(action.size, 10));
+      return newBoard(action.size);
     case 'RESET_BOARD':
       return newBoard(state.rows, state.groupSize);
     case 'HIGHLIGHT_WIN':

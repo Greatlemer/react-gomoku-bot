@@ -18,7 +18,7 @@ Remaining tasks:
   * -Human vs Human-
   * -Victory detection-
   * -Highlight winning row-
-  * Choose number-in-a-row to trigger win
+  * -Choose number-in-a-row to trigger win-
 
 * Bot Logic:
   * -Random empty cell selector-
