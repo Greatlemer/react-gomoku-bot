@@ -13,6 +13,7 @@ class Game extends Component {
     super();
 
     this.findWinner = this.findWinner.bind(this);
+    this.handleAbortGame = this.handleAbortGame.bind(this);
     this.handleBoardResize = this.handleBoardResize.bind(this);
     this.handleGroupSizeUpdate = this.handleGroupSizeUpdate.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
@@ -52,6 +53,13 @@ class Game extends Component {
       }
     }
     return null;
+  }
+
+  handleAbortGame() {
+    this.setState({
+      gameStarted: false,
+      winMessage: 'Game Abandoned!',
+    });
   }
 
   handleBoardResize() {
@@ -107,21 +115,10 @@ class Game extends Component {
   }
 
   renderGameButton() {
-    let winMessage = '';
-    if (this.state.winMessage) {
-      winMessage = (
-        <p>{this.state.winMessage}</p>
-      )
-    }
     if (!this.state.gameStarted) {
-      return (
-        <div>
-          {winMessage}
-          <button onClick={this.handleStartGame}>Start Game</button>
-        </div>
-      );
+      return <button onClick={this.handleStartGame}>Start New Game</button>
     }
-    return <p>Game in progress...</p>;
+    return <button onClick={this.handleAbortGame}>Abort Game</button>
   }
 
   renderPlayer(index, piece) {
@@ -140,27 +137,40 @@ class Game extends Component {
   }
 
   render() {
+    let statusMessage = '';
+    if (this.state.gameStarted) {
+      statusMessage = 'Game in progress...';
+    } else if (this.state.winMessage) {
+      statusMessage = this.state.winMessage;
+    }
     return (
       <div>
         <h3>Game Info</h3>
         <div className='board_info'>
-          <div>
-            <label>Board Size: <input
-                defaultValue={15}
-                onChange={this.handleBoardResize}
-                ref={input => this.boardSize = input}
-                type='number'
-            /></label>
+          <div className='game_settings'>
+            <div>
+              <label>Board Size: <input
+                  defaultValue={15}
+                  disabled={this.state.gameStarted}
+                  onChange={this.handleBoardResize}
+                  ref={input => this.boardSize = input}
+                  type='number'
+              /></label>
+            </div>
+            <div>
+              <label>X-in-a-row to win: <input
+                  defaultValue={5}
+                  disabled={this.state.gameStarted}
+                  onChange={this.handleGroupSizeUpdate}
+                  ref={input => this.groupSize = input}
+                  type='number'
+              /></label>
+            </div>
           </div>
-          <div>
-            <label>X-in-a-row to win: <input
-                defaultValue={5}
-                onChange={this.handleGroupSizeUpdate}
-                ref={input => this.groupSize = input}
-                type='number'
-            /></label>
+          <div className='game_status'>
+            <p>{ statusMessage }</p>
+            <div>{ this.renderGameButton() }</div>
           </div>
-          { this.renderGameButton() }
         </div>
         <div className='player_info'>
           { this.renderPlayer(1, BLACK_PIECE) }

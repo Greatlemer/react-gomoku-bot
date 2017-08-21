@@ -19,6 +19,9 @@ Remaining tasks:
   * -Victory detection-
   * -Highlight winning row-
   * -Choose number-in-a-row to trigger win-
+  * Limit Board Size to be at least 2
+  * Limit X-in-a-row setting to be between 2 and Board Size
+  * -Lock down board and player settings once game starts-
 
 * Bot Logic:
   * -Random empty cell selector-

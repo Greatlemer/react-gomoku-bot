@@ -75,15 +75,15 @@ function extractCellGroup(cells, startIndex, offset, groupSize) {
 
 function isKeyCell(index, rows, columns) {
   // Key cells are:
-  // * The center cell;
+  // * The center cell (if an odd number);
   // * The ones four in (diagonally) from each corner;
   // * The ones four in from the side and in the middle (when cols or rows > 18);
   const cellColumn = index % rows;
   const cellRow = Math.floor(index / columns);
   const fourFromBottom = rows - 4;
   const fourFromRight = columns - 4;
-  const middleColumn = Math.floor(columns / 2);
-  const middleRow = Math.floor(rows / 2);
+  const middleColumn = columns % 2 === 1 ? Math.floor(columns / 2) : -1;
+  const middleRow = rows % 2 === 1 ? Math.floor(rows / 2) : -1;
   if (cellColumn === 3 || cellColumn === fourFromRight) {
     if (cellRow === 3 || cellRow === fourFromBottom) {
       return true;

@@ -40,7 +40,11 @@ export default class Player extends Component {
 
   renderPlayerChooser() {
     return (
-      <select ref={input => this.player_type = input} onChange={this.handlePlayerChooserChange}>
+      <select
+        disabled={this.props.gameStarted}
+        onChange={this.handlePlayerChooserChange}
+        ref={input => this.player_type = input}
+      >
         {
           Object.entries(this.playerChoices).map(
             ([key, obj]) => <option key={key} value={key}>{obj.name}</option>

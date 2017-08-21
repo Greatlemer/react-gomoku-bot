@@ -22,12 +22,18 @@ function mapDispatchToProps(dispatch) {
 
 class App extends Component {
   render() {
+    let titleStart = `${this.props.board.groupSize}-in-a-row`;
+    if (this.props.board.groupSize === 3 && this.props.board.rows === 3) {
+      titleStart = 'Tic-Tac-Toe';
+    } else if (this.props.board.groupSize === 5 && this.props.board.rows === 15) {
+      titleStart = 'Gomoku';
+    }
     return (
       <div className="App">
         <div className="App-header">
           <h2>
             <img src={logo} className="App-logo" alt="logo" />
-            Gomoku BattleBot: (React Edition)
+            {titleStart} Battler: (React Edition)
             <img src={logo} className="App-logo" alt="logo" />
           </h2>
         </div>

@@ -1,3 +1,36 @@
+.board_info {
+  display: flex;
+}
+
+.game_settings {
+  width: 40%;
+}
+
+.game_settings label {
+  clear: both;
+  display: block;
+  margin-bottom: 1ex;
+  padding-left: 2em;
+  text-align: left;
+  width: 70%;
+}
+
+.game_settings input {
+  float: right;
+}
+
+.game_settings div,
+.game_status div,
+.game_status p {
+  clear: both;
+  margin-bottom: 1ex;
+  margin-top: 0;
+}
+
+.game_status {
+  flex-grow: 1;
+}
+
 .player_info {
   border: 1px solid #aaa;
   display: flex;
