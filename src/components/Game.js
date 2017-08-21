@@ -93,7 +93,7 @@ class Game extends Component {
       } else if (winner && winner.colour === WHITE_PIECE) {
         this.props.highlightWin(winner.winningCells);
         winMessage = 'White Wins!';
-      } else if (this.state.moveNumber > (this.props.board.columns * this.props.board.rows)) {
+      } else if (this.state.moveNumber >= this.props.board.cells.length) {
         winMessage = 'The Game Was Tied!';
       }
       return {
