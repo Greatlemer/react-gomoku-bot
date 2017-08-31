@@ -12,17 +12,13 @@ function opponent(piece) {
 
 function generateCellScores(groupSize) {
   let emptyCells = groupSize - 1,
-    score = 1,
     target = 'threat';
   const scores = {
     opportunity: {},
     threat: {},
   };
   while (emptyCells > 0) {
-    // `4` directions a line can be made;
-    // `groupSize` positions in the line;
-    score = (4 * groupSize * score) + 1;
-    scores[target][emptyCells] = score;
+    scores[target][emptyCells] = 1;
     if (target === 'opportunity') {
       emptyCells -= 1;
       target = 'threat';
@@ -33,9 +29,9 @@ function generateCellScores(groupSize) {
   return scores;
 }
 
-function determineNextMove(board, colour) {
+function determineNextMove(board, generateWeightsFunction, colour) {
   // This could be cached upon groupSize being set
-  const cellScores = generateCellScores(board.groupSize);
+  const cellScores = generateWeightsFunction(board.groupSize);
   const weights = board.cells.map(() => 0);
   let cell,
     cellIndex,
@@ -74,17 +70,17 @@ function determineNextMove(board, colour) {
   return topCells[randomCell];
 }
 
-const className = 'local-robot-player',
-  name = 'Bot (local)',
-  shortName = 'localRobot';
+const className = 'local-random-robot-player',
+  name = 'Random Bot (local)',
+  shortName = 'localRandomRobot';
 
 export default class LocalRobotPlayer extends PlayerController {
   getStatus() {
-    return 'Waiting for opposition';
+    return 'Waiting for winner';
   }
 
   async nextMove(board, playFunc) {
-    playFunc(determineNextMove(board, this.props.colour));
+    playFunc(determineNextMove(board, this.weightFunction, this.props.colour));
   }
 
   static get className() {
@@ -97,5 +93,9 @@ export default class LocalRobotPlayer extends PlayerController {
 
   static get shortName() {
     return shortName;
+  }
+
+  get weightFunction() {
+    return generateCellScores;
   }
 }

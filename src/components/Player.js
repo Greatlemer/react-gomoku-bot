@@ -4,10 +4,18 @@ import React, { Component } from 'react';
 import { BLACK_PIECE, WHITE_PIECE } from './Cell';
 import HumanPlayer from './HumanPlayer';
 import LocalRobotPlayer from './LocalRobotPlayer';
+import LocalRobotPlayerV1 from './LocalRobotPlayerV1';
+import LocalRobotPlayerV2 from './LocalRobotPlayerV2';
+import LocalRobotPlayerV3 from './LocalRobotPlayerV3';
+import LocalRobotPlayerV4 from './LocalRobotPlayerV4';
 
 import './Player.css';
 
 const playerTypes = [
+  LocalRobotPlayerV4,
+  LocalRobotPlayerV3,
+  LocalRobotPlayerV2,
+  LocalRobotPlayerV1,
   LocalRobotPlayer,
   HumanPlayer,
 ];
